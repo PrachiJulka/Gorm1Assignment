@@ -1,5 +1,5 @@
 package com.ttn.linksharing
-/*WithNewSession in after insert because it will not work without it*/
+/*Seriousness should be very serious for auto subscribed topic in after insert*/
 
 class Topic {
 
@@ -17,7 +17,7 @@ class Topic {
     def afterInsert() {
         log.info "----------Into After Insert------"
         Topic.withNewSession {
-            Subscription subscription= new Subscription(topics: this,seriousness: Seriousness.CASUAL,user: this.createdBy)
+            Subscription subscription= new Subscription(topics: this,seriousness: Seriousness.VERYSERIOUS,user: this.createdBy)
             subscription.validate()
             log.error("Topic ${subscription.errors.getFieldErrors()}")
 
