@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 /*
-Use failOnError and flush true for persisting users.*/
+Use log info statements for data creation and log error if there are any errors*/
 
 
 class BootStrap {
