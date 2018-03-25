@@ -1,16 +1,5 @@
 package com.ttn.linksharing
-/*
-Add topic domain and its fields with following constraints:
-
-Topic name should be not null, not blank, unique per user
-Visibility should be enum and should not be null
-Created by should not be null
-Write test cases for validating topic
-string name
-User createdby
-datecreated
-lastUpated
-Enum Visibility
+/*Creator of topic should automatically be subscribed to topic (Use after insert event of topic)
 */
 
 class Topic {
@@ -25,6 +14,17 @@ class Topic {
         name(blank: false, nullable: false, unique: 'createdBy')
         visibility(nullable: false)
     }
+
+    def afterInsert() {
+        log.info "----------Into After Insert------"
+        Topic.withNewSession {
+            Subscription subscription= new Subscription(topics: this,seriousness: Seriousness.CASUAL,user: this.createdBy)
+            subscription.save()
+        }
+
+
+    }
+
 
 
 }

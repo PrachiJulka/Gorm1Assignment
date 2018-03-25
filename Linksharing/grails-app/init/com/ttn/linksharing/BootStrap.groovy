@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 /*
-5 topics per user needs to be created if Topic count is 0
+Creator of topic should automatically be subscribed to topic (Use after insert event of topic)
 */
 
 class BootStrap {
