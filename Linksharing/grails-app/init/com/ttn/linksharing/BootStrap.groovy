@@ -1,7 +1,7 @@
 package com.ttn.linksharing
 /*
-Add createTopics method in bootstrap*/
-
+5 topics per user needs to be created if Topic count is 0
+*/
 
 class BootStrap {
 
@@ -11,6 +11,7 @@ class BootStrap {
         else
         log.error("Users Created Successfully")
 
+        createTopics()
           }
     boolean createUsers(){
 
@@ -41,17 +42,33 @@ class BootStrap {
 
     }
 
-    boolean createTopic(){
+    boolean createTopics(){
 
         if(Topic.count()==0)
         {
-        User normal = new User(email: "prachijulka@gmail.com",
-                password: "admin@123", firstName: "Prachi",
-                lastName: "Julka", userName: 'PrachiJulka', photo: 122,
-                admin: false, active: true)
+        User normal=User.findByUserName("PrachiJulka")
+
+        Topic topic=new Topic(name: "BigData", createdBy: normal,visibility: Visibility.PUBLIC)
+        normal.addToTopics(topic)
+
+            Topic topic1=new Topic(name: "Java",createdBy: normal,visibility: Visibility.PRIVATE)
+            normal.addToTopics(topic1)
+
+            Topic topic2=new Topic(name: "nodeJs",createdBy: normal,visibility: Visibility.PUBLIC)
+            normal.addToTopics(topic2)
+
+            Topic topic3=new Topic(name: "AngularJs", createdBy: normal,visibility: Visibility.PRIVATE)
+            normal.addToTopics(topic3)
+
+            Topic topic4=new Topic(name: "MachineLearning",createdBy: normal,visibility: Visibility.PUBLIC)
+            normal.addToTopics(topic4)
 
 
-
+            topic.save()
+            topic1.save()
+            topic2.save()
+            topic3.save()
+            topic4.save()
 
         }
 
