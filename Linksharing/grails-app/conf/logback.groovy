@@ -38,3 +38,4 @@ root(INFO,['STDOUT'])
 
 logger 'grails-app.controllers', INFO, ['STDOUT']
 logger 'grails-app.init',ERROR,['STDOUT']
+logger 'grails-app.domain',ERROR,['STDOUT']

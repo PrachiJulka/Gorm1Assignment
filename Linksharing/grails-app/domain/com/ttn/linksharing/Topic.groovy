@@ -1,6 +1,5 @@
 package com.ttn.linksharing
-/*Creator of topic should automatically be subscribed to topic (Use after insert event of topic)
-*/
+/*WithNewSession in after insert because it will not work without it*/
 
 class Topic {
 
@@ -19,6 +18,9 @@ class Topic {
         log.info "----------Into After Insert------"
         Topic.withNewSession {
             Subscription subscription= new Subscription(topics: this,seriousness: Seriousness.CASUAL,user: this.createdBy)
+            subscription.validate()
+            log.error("Topic ${subscription.errors.getFieldErrors()}")
+
             subscription.save()
         }
 

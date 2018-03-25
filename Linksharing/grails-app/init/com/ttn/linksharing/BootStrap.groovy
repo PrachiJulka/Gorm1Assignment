@@ -63,11 +63,20 @@ class BootStrap {
             Topic topic4=new Topic(name: "MachineLearning",createdBy: normal,visibility: Visibility.PUBLIC)
             normal.addToTopics(topic4)
 
-
+            topic.validate()
+            log.error("Topic ${topic.errors.getFieldErrors()}")
             topic.save()
+            topic1.validate()
+            log.error("Topic ${topic1.errors.getFieldErrors()}")
             topic1.save()
+            topic2.validate()
+            log.error("Topic ${topic2.errors.getFieldErrors()}")
             topic2.save()
+            topic3.validate()
+            log.error("Topic ${topic3.errors.getFieldErrors()}")
             topic3.save()
+            topic4.validate()
+            log.error("Topic ${topic4.errors.getFieldErrors()}")
             topic4.save()
 
         }
