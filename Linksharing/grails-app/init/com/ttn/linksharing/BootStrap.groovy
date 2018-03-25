@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 /*
-Error should be logged
+Creator of the resource should be same as creator of the topic
  */
 
 class BootStrap {
