@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 /*
-Use failOnError and flush true for persisting users.*/
+Add createTopics method in bootstrap*/
 
 
 class BootStrap {
@@ -38,6 +38,22 @@ class BootStrap {
         }
         return false
 
+
+    }
+
+    boolean createTopic(){
+
+        if(Topic.count()==0)
+        {
+        User normal = new User(email: "prachijulka@gmail.com",
+                password: "admin@123", firstName: "Prachi",
+                lastName: "Julka", userName: 'PrachiJulka', photo: 122,
+                admin: false, active: true)
+
+
+
+
+        }
 
     }
     def destroy = {
