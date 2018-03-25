@@ -1,7 +1,6 @@
 package com.ttn.linksharing
 /*
-Description of the resource should include topic name
- */
+Description of the resource should include topic name */
 
 class BootStrap {
 
