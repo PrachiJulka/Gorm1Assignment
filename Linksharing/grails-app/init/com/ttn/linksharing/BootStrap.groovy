@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 /*
-Use failOnError and flush true for persisting users.*/
+Users will be created only when there are no records in user table*/
 
 
 class BootStrap {
