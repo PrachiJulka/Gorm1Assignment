@@ -1,7 +1,6 @@
 package com.ttn.linksharing
 /*
-Description of the resource should include topic name
- */
+It should create resource only if there is not data in resource table */
 
 class BootStrap {
 
