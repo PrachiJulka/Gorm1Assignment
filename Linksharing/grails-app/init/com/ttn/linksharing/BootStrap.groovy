@@ -32,36 +32,47 @@ class BootStrap {
         }
     }
 
-    void createTopics(){
+    
+    void createTopics() {
+        List<User> userCount = User.getAll()
+        userCount.each {
 
-        if(Topic.count()==0)
-        {
-        User normal=User.findByUserName("PrachiJulka")
+            if (Topic.findAllByCreatedBy(it).size()==0) {
+                //User normal = User.findByUserName("PrachiJulka")
 
-        Topic topic=new Topic(name: "BigData", createdBy: normal,visibility: Visibility.PUBLIC)
-        normal.addToTopics(topic)
+                Topic topic = new Topic(name: "BigData", createdBy: it, visibility: Visibility.PUBLIC)
+                it.addToTopics(topic)
 
-            Topic topic1=new Topic(name: "Java",createdBy: normal,visibility: Visibility.PRIVATE)
-            normal.addToTopics(topic1)
+                Topic topic1 = new Topic(name: "Java", createdBy: it, visibility: Visibility.PRIVATE)
+                it.addToTopics(topic1)
 
-            Topic topic2=new Topic(name: "nodeJs",createdBy: normal,visibility: Visibility.PUBLIC)
-            normal.addToTopics(topic2)
+                Topic topic2 = new Topic(name: "nodeJs", createdBy: it, visibility: Visibility.PUBLIC)
+                it.addToTopics(topic2)
 
-            Topic topic3=new Topic(name: "AngularJs", createdBy: normal,visibility: Visibility.PRIVATE)
-            normal.addToTopics(topic3)
+                Topic topic3 = new Topic(name: "AngularJs", createdBy: it, visibility: Visibility.PRIVATE)
+                it.addToTopics(topic3)
 
-            Topic topic4=new Topic(name: "MachineLearning",createdBy: normal,visibility: Visibility.PUBLIC)
-            normal.addToTopics(topic4)
+                Topic topic4 = new Topic(name: "MachineLearning", createdBy: it, visibility: Visibility.PUBLIC)
+                it.addToTopics(topic4)
 
+                topic.validate()
+                log.error("Topic ${topic.errors.getFieldErrors()}")
+                topic.save()
+                topic1.validate()
+                log.error("Topic ${topic1.errors.getFieldErrors()}")
+                topic1.save()
+                topic2.validate()
+                log.error("Topic ${topic2.errors.getFieldErrors()}")
+                topic2.save()
+                topic3.validate()
+                log.error("Topic ${topic3.errors.getFieldErrors()}")
+                topic3.save()
+                topic4.validate()
+                log.error("Topic ${topic4.errors.getFieldErrors()}")
+                topic4.save()
 
-            topic.save()
-            topic1.save()
-            topic2.save()
-            topic3.save()
-            topic4.save()
-
+            }
         }
-
     }
     def destroy = {
     }
