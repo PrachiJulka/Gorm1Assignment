@@ -1,7 +1,8 @@
 package com.ttn.linksharing
 /*
-Add subscribeTopics for user to subscribe all the topics
- which are not created by user */
+Subscription should be created only if
+the subscription do not exit for user and topic
+*/
 
 class BootStrap {
 
@@ -189,9 +190,11 @@ class BootStrap {
             List<Topic> topics=Topic.findAllByCreatedByNotEqual(user)
 
             topics.each {
-               Subscription subscription = new Subscription(seriousness: Seriousness.CASUAL, user: user, topics: it)
-               subscription.validate()
-               subscription.save()
+                if(Subscription.findAllByTopicsAndUserNotEqual(it,user)) {
+                    Subscription subscription = new Subscription(seriousness: Seriousness.CASUAL, user: user, topics: it)
+                    subscription.validate()
+                    subscription.save()
+                }
            }
 
             id++
