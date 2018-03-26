@@ -1,7 +1,6 @@
 package com.ttn.linksharing
 /*
-Creator of topic should automatically be subscribed to topic (Use after insert event of topic)
-*/
+WithNewSession in after insert because it will not work without it*/
 
 class BootStrap {
 
