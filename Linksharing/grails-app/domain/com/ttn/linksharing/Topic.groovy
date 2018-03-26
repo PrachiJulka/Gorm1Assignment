@@ -1,5 +1,6 @@
 package com.ttn.linksharing
-/*Seriousness should be very serious for auto subscribed topic in after insert*/
+/*toString should be implemented for Topic
+with topic name and for User with username*/
 
 class Topic {
 
@@ -28,7 +29,12 @@ class Topic {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
 
 
