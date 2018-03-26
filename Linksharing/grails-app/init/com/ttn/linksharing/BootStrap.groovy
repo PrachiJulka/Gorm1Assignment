@@ -73,55 +73,33 @@ class BootStrap {
             }
         }
     }
-        void createResource(){
+            void createResource(){
 
-            List<Topic> topics=Topic.findAll()
-            Resource resource=new LinkResource(url: "https://en.wikipedia.org/wiki/Big_data", description: "Bigdata url",topic:topics.get(0),user:topics.get(0).createdBy)
-            resource.save()
-            Resource resource1=new LinkResource(url:"https://www.sas.com/en_in/insights/big-data/what-is-big-data.html",description: "bigdata",topic:topics.get(0),user: topics.get(0).createdBy)
-            resource1.save()
-            Resource resource2 =new DocumentResource(filePath: "fvnkdfvdk",description: "cndfbcfefbfer", user:topics.get(0).createdBy,topic:topics.get(0))
-            resource2.save()
-            Resource resource3 =new DocumentResource(filePath: "nvdjfn",user:topics.get(0).createdBy,description:"csbhcbshdcbhdb",topic:topics.get(0))
-            resource3.save()
+            if(Resource.count()==0) {
 
-            Resource resource4=new LinkResource(url:"fdvdnjfvnj",description: "dfvnjdfnv",user:topics.get(1).createdBy,topic:topics.get(1))
-            resource4.save()
-            Resource resource5=new LinkResource(url:"cnjdfnjdf",description:"sdncjdnvjd",user:topics.get(1).createdBy,topic:topics.get(1))
-            resource5.save()
-            Resource resource6 =new DocumentResource(filePath: "fvnkdfvdk",description: "cndfbcfefbfer", user:topics.get(1).createdBy,topic:topics.get(1))
-            resource6.save()
-            Resource resource7 =new DocumentResource(filePath: "nvdjfn",user:topics.get(1).createdBy,description:"csbhcbshdcbhdb",topic:topics.get(1))
-            resource7.save()
+                List<Topic> topics = Topic.getAll()
 
-            Resource resource8=new LinkResource(url:"fvjnvf",description: "dvfnj",user:topics.get(2).createdBy,topic:topics.get(2))
-            resource8.save()
-            Resource resource9=new LinkResource(url:"nvjdfnd",description:"mcksmd",user:topics.get(2).createdBy,topic:topics.get(2))
-            resource9.save()
-            Resource resource10 =new DocumentResource(filePath: "dlssldsl",description: "akoakoa", user:topics.get(2).createdBy,topic:topics.get(2))
-            resource10.save()
-            Resource resource11 =new DocumentResource(filePath: "dcndncjsl",user:topics.get(2).createdBy,description:"sdmskdm",topic:topics.get(2))
-            resource11.save()
+                topics.each {
+                    Resource resource = new LinkResource(url: "https://en.wikipedia.org/wiki/Big_data", description: "${it.name} url", topic: it, user: it.createdBy)
+                    resource.validate()
+                    log.error("Resource Error: ${resource.errors.allErrors}")
+                    resource.save()
+                    Resource resource1 = new LinkResource(url: "https://www.sas.com/en_in/insights/big-data/what-is-big-data.html", description: "${it.name} bigdata", topic: it, user:it.createdBy)
+                    resource1.validate()
+                    log.error("Resource Error: ${resource1.errors.allErrors}")
+                    resource1.save()
+                    Resource resource2 = new DocumentResource(filePath: "fvnkdfvdk", description: "${it.name} cndfbcfefbfer", user: it.createdBy, topic: it)
+                    resource2.validate()
+                    log.error("Resource Error: ${resource2.errors.allErrors}")
+                    resource2.save()
+                    Resource resource3 = new DocumentResource(filePath: "nvdjfn", user: it.createdBy, description: "${it.name} sdns", topic: it)
+                    resource3.validate()
+                    log.error("Resource Error: ${resource3.errors.allErrors}")
+                    resource3.save()
 
-            Resource resource12=new LinkResource(url:"mkmkmkmk",description: "sudhusd",user:topics.get(3).createdBy,topic:topics.get(3))
-            resource12.save()
-            Resource resource13=new LinkResource(url:"dmfkdmfk",description:"dncdnvjd",user:topics.get(3).createdBy,topic:topics.get(3))
-            resource13.save()
-            Resource resource14 =new DocumentResource(filePath: "sdmskdmks",description: "ldsldl", user:topics.get(3).createdBy,topic:topics.get(3))
-            resource14.save()
-            Resource resource15 =new DocumentResource(filePath: "dcnsdjncjd",user:topics.get(3).createdBy,description:"kokokok",topic:topics.get(3))
-            resource15.save()
+                }
 
-            Resource resource16=new LinkResource(url:"sdcnsjdncjd",description: "dscnskdcks",user:topics.get(4).createdBy,topic:topics.get(4))
-            resource16.save()
-            Resource resource17=new LinkResource(url:"vfmdkfvm",description:"dckdkmv",user:topics.get(4).createdBy,topic:topics.get(4))
-            resource17.save()
-            Resource resource18 =new DocumentResource(filePath: "LAKALLA",description: "dcnjdnjdfs", user:topics.get(4).createdBy,topic:topics.get(4))
-            resource18.save()
-            Resource resource19 =new DocumentResource(filePath: "sdkcnskd",user:topics.get(4).createdBy,description:"ksidksieki",topic:topics.get(4))
-            resource19.save()
-
-
+            }
 
 
         }
