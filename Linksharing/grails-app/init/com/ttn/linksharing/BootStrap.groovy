@@ -1,7 +1,6 @@
 package com.ttn.linksharing
 /*
-Subscription should be created only if
-the subscription do not exit for user and topic
+log statement when subscription is created with user and topic object
 */
 
 class BootStrap {
