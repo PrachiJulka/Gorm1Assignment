@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 /*
-Creator of topic should automatically be subscribed to topic (Use after insert event of topic)
+Errors should be logged if topic or subscriptions is not saved
 */
 
 class BootStrap {
