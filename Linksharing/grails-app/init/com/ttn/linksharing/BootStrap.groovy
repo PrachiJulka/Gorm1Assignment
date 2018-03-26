@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 /*
-Error should be logged
+Question 15 Error should be logged
  */
 
 class BootStrap {
