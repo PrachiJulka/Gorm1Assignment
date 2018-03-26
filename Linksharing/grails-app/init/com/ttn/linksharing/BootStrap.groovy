@@ -1,6 +1,9 @@
 package com.ttn.linksharing
 /*
-It should create resource only if there is not data in resource table */
+Question 13 and Question 14 both are implemented on this branch
+Question 13 It should create resource only if there is not data in resource table
+Question 14 Description of the resource should include topic name
+*/
 
 class BootStrap {
 
