@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 /*
-log statement when subscription is created with user and topic object
+Add createReadingItems in bootstrap to create dummy reading items
 */
 
 class BootStrap {
@@ -11,6 +11,7 @@ class BootStrap {
         createTopics()
         createResource()
         subscribeTopicsNotCreatedByUser()
+        createReadingItems()
     }
     void createUsers(){
 
@@ -128,7 +129,16 @@ class BootStrap {
 
     }
 
+    void createReadingItems(){
+        List<Resource> resource=Resource.getAll()
+        resource.each {
+            ReadingItem readingItem=new ReadingItem(user: it.user,resource:it,isRead:true)
+            readingItem.validate()
+           log.error("Errorrrrrrrrrrrrrrrrrrrrrrr ${readingItem.errors.getAllErrors()}")
+            readingItem.save()
+        }
 
+    }
     def destroy = {
     }
 }
