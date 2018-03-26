@@ -9,7 +9,7 @@ class ResourceRating {
         score( validator: {
             return it >= 1 &&  it<= 5
         })
-        user(nullable: false,blank: false,unique: 'resource')
+        user(nullable: false,blank: false, unique: 'resource')
         resource(nullable: false,blank:false)
 
     }

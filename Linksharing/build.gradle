@@ -58,8 +58,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:2.47.1"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
-   /* testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.0.1.RELEASE'
-   */ /*testCompile "org.grails:grails-test-mixins:3.3.0"*/
+    //compile group: 'org.grails', name: 'grails-console', version: '3.0.1'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
 
 }
@@ -68,7 +67,7 @@ dependencies {
     bootRun {
         jvmArgs('-Dspring.output.ansi.enabled=always')
         addResources = true
-        systemProperty 'server.port', '8490'
+        systemProperty 'server.port', '8080'
         String springProfilesActive = 'spring.profiles.active'
         systemProperty springProfilesActive, System.getProperty(springProfilesActive)
     }

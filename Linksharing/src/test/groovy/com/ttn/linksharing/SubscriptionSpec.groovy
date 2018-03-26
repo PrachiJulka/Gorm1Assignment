@@ -75,6 +75,7 @@ class SubscriptionSpec extends Specification implements DomainUnitTest<Subscript
 
 
         then:
+        println(subscription1.errors.getAllErrors())
         subscription1.errors.getFieldErrorCount('topics')==1
         subscription1.errors.hasErrors()==true
     }

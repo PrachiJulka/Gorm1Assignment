@@ -31,28 +31,31 @@ class ReadingItemSpec extends Specification implements DomainUnitTest<ReadingIte
 
         when:
         ReadingItem readingItem=new ReadingItem(isRead: true,user:user,resource:resource)
-
-        readingItem.validate()
+       readingItem.validate()
         readingItem.save()
+
         then:
         ReadingItem.count==1
+
 
         when:
 
         ReadingItem readingItem1=new ReadingItem(isRead: true,user:user,resource:resource)
         resource.addToReadingItems(readingItem1)
-       // user.addToReadingItems(readingItem1)
+        resource.save()
+        user.addToReadingItems(readingItem1)
+        user.save()
         readingItem1.validate()
         readingItem1.save()
         ReadingItem readingItem2=new ReadingItem(isRead: true,user:user,resource:resource)
         resource.addToReadingItems(readingItem2)
-       // user.addToReadingItems(readingItem2)
-
+        resource.save()
+        user.addToReadingItems(readingItem2)
+        user.save()
         readingItem2.validate()
         readingItem2.save()
 
-        then:
-        readingItem2.errors.getFieldErrorCount('user')==1
+       then:
         readingItem2.errors.hasErrors()==true
 
     }

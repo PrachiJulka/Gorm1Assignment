@@ -1,7 +1,7 @@
 package com.ttn.linksharing
 /*
-Creator of the resource should be same as creator of the topic
- */
+Add subscribeTopics for user to subscribe all the topics
+ which are not created by user */
 
 class BootStrap {
 
@@ -10,6 +10,11 @@ class BootStrap {
         createUsers()
         createTopics()
         createResource()
+       subscribeTopicsNotCreatedByUser()
+
+      /*  User user=new User(userName: "abc",firstName: "a",lastName: "def",photo: 123,active:true,admin:false,password: "abc123",email: "abc@gmail.com" )
+        user.validate()
+        user.save()*/
           }
     boolean createUsers(){
 
@@ -174,6 +179,25 @@ class BootStrap {
 
 
         }
+
+    void subscribeTopicsNotCreatedByUser(){
+       Integer id=1;
+        List<User> userCount=User.getAll()
+
+        userCount.each{
+            User user=it
+            List<Topic> topics=Topic.findAllByCreatedByNotEqual(user)
+
+            topics.each {
+               Subscription subscription = new Subscription(seriousness: Seriousness.CASUAL, user: user, topics: it)
+               subscription.validate()
+               subscription.save()
+           }
+
+            id++
+        }
+
+    }
 
 
     def destroy = {
