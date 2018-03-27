@@ -1,4 +1,7 @@
 package com.ttn.linksharing
+
+import com.ttn.constants.DefaultPassword
+
 /*
 Add createResourceRatings to add dummy ratings
 */
@@ -16,10 +19,10 @@ class BootStrap {
     }
     void createUsers(){
 
-
+       final def pass=DefaultPassword.PASSWORD
         //admin
         if(User.count()==0) {
-            User admin = new User(email: "admin@gmail.com", password: "admin@123", firstName: "admin", lastName: "portal", userName: 'adminPortal', photo: 121, admin: true, active: true)
+            User admin = new User(email: "admin@gmail.com", password: pass, firstName: "admin", lastName: "portal", userName: 'adminPortal', photo: 121, admin: true, active: true)
             admin.validate()
             log.error("error: ${admin.errors.getAllErrors()}")
             admin.save(flush: true)
@@ -27,7 +30,7 @@ class BootStrap {
                 log.info("Admin Saved Successfully")
 
             //normal
-            User normal = new User(email: "prachijulka@gmail.com", password: "admin@123", firstName: "Prachi", lastName: "Julka", userName: 'PrachiJulka', photo: 122, admin: false, active: true)
+            User normal = new User(email: "prachijulka@gmail.com", password: pass, firstName: "Prachi", lastName: "Julka", userName: 'PrachiJulka', photo: 122, admin: false, active: true)
             normal.validate()
             log.error("error: ${normal.errors.getFieldErrors()}")
             normal.save(flush: true)
