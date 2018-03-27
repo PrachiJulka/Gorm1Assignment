@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 /*
-Add createReadingItems in bootstrap to create dummy reading items
+Add createResourceRatings to add dummy ratings
 */
 
 class BootStrap {
@@ -12,6 +12,7 @@ class BootStrap {
         createResource()
         subscribeTopicsNotCreatedByUser()
         createReadingItems()
+        createResourceRating()
     }
     void createUsers(){
 
@@ -138,6 +139,16 @@ class BootStrap {
             readingItem.save()
         }
 
+    }
+
+    void createResourceRating(){
+        List<Resource> resource=Resource.getAll()
+        resource.each {
+            ResourceRating resourceRating=new ResourceRating(user: it.user,resource:it,score: 3)
+            resourceRating.validate()
+            log.error("Errorrrrrrrrrrrrrrrrrrrrrrr ${resourceRating.errors.getAllErrors()}")
+            resourceRating.save()
+        }
     }
     def destroy = {
     }
