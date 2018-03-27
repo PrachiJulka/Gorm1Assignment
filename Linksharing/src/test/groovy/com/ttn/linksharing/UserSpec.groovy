@@ -1,5 +1,6 @@
 package com.ttn.linksharing
-
+/*
+Add test cases for tostring of Topic and User*/
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
@@ -278,5 +279,25 @@ class UserSpec extends Specification implements DomainUnitTest<User> {
         user2.errors.allErrors.size() == 1
 
     }
+
+    def "To check to String"(){
+
+        setup:
+        String email = "prachijulka@tothenew.com"
+        String password = 'p1231'
+        User user = new User(email: email,userName:"prachiJ",password:password, firstName: "Prachi", lastName: "Julka",admin:false,active:true)
+
+        when:
+        user.save()
+
+        then:
+        user.toString()==
+                "User{userName='${user.userName}'}"
+
+
+
+    }
+
+
 
 }

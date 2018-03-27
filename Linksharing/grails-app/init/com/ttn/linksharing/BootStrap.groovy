@@ -12,7 +12,7 @@ class BootStrap {
         createResource()
         subscribeTopicsNotCreatedByUser()
         createReadingItems()
-        createResourceRating()
+//        createResourceRating()
     }
     void createUsers(){
 
@@ -132,11 +132,23 @@ class BootStrap {
 
     void createReadingItems(){
         List<Resource> resource=Resource.getAll()
-        resource.each {
-            ReadingItem readingItem=new ReadingItem(user: it.user,resource:it,isRead:true)
-            readingItem.validate()
-           log.error("Errorrrrrrrrrrrrrrrrrrrrrrr ${readingItem.errors.getAllErrors()}")
-            readingItem.save()
+        List<User> userList=User.getAll()
+
+        userList.each {
+            User user=it
+            List<Subscription> subscriptionList=Subscription.findAllByUser(user)
+            subscriptionList.each {
+
+                        if(it.topics.getResources()){
+                            it.topics.getResources().each {
+
+                                ReadingItem readingItem=new ReadingItem(user: user,resource: it,isRead: true)
+                                readingItem.validate()
+                                readingItem.save()
+                            }
+                        }
+            }
+
         }
 
     }

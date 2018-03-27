@@ -4,8 +4,8 @@ import grails.testing.gorm.DomainUnitTest
 
 import spock.lang.Specification
 
-
-
+/*
+Add test cases for tostring of Topic and User*/
 
 class TopicSpec extends Specification implements DomainUnitTest<Topic>{
 
@@ -127,5 +127,27 @@ class TopicSpec extends Specification implements DomainUnitTest<Topic>{
         topic.errors.hasErrors()==true
 
     }
+
+    def "To check to string "(){
+
+            setup:
+            String email = "prachijulka@tothenew.com"
+            String password = 'p1231'
+            User user = new User(email: email,userName:"prachiJ",password:password, firstName: "Prachi", lastName: "Julka",admin:false,active:true)
+            Topic topic=new Topic (name:"topic",createdBy: null,visibility: Visibility.PUBLIC)
+
+        when:
+            topic.save()
+
+            then:
+            topic.toString()==
+                    "Topic{name='${topic.name}'}"
+
+
+
+
+    }
+
+
 
 }

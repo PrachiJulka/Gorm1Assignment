@@ -8,6 +8,7 @@ class Topic {
     Date dateCreated
     Date lastUpdated
     Visibility visibility
+    //List<Resource> resourceList
     static belongsTo = [ createdBy : User]
     static hasMany = [subscriptions:Subscription, resources:Resource]
     static constraints = {
