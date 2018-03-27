@@ -1,10 +1,17 @@
 package com.ttn.linksharing
-//Document resource should have filepath
+//Add toString for linkresource with url
 class DocumentResource extends Resource {
 
     String filePath
 
     static constraints = {
         filePath(nullable: false,blank: false)
+    }
+
+    @Override
+    public String toString() {
+        return "DocumentResource{" +
+                "filePath='" + filePath + '\'' +
+                '}';
     }
 }
