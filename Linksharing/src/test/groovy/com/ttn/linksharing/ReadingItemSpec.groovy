@@ -2,6 +2,8 @@ package com.ttn.linksharing
 
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
+/*
+Add test case for document resource and linkresource tostring*/
 
 class ReadingItemSpec extends Specification implements DomainUnitTest<ReadingItem> {
 

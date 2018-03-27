@@ -1,4 +1,6 @@
 package com.ttn.linksharing
+/*
+Add test case for document resource and linkresource tostring*/
 
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
@@ -47,6 +49,22 @@ class LinkResourceSpec extends Specification implements DomainUnitTest<LinkResou
 
         then:
         linkResource1.errors.getFieldErrorCount('url')==1
+
+    }
+
+    def "check to string of linkresource"(){
+        setup:
+        String email = "prachijulka@tothenew.com"
+        String password = 'p1231'
+        User user = new User(email: email,userName:"prachiJ",password:password, firstName: "Prachi", lastName: "Julka",admin:false,active:true)
+        Topic topic = new Topic(name:"sd",visibility: Visibility.PUBLIC,createdBy: user)
+        LinkResource linkResource=new LinkResource(url:"www.google.com", user:user,topic: topic,description: "aaaaaaa")
+
+        when:
+        linkResource.save()
+        then:
+        linkResource.toString()==
+                "LinkResource{url='${linkResource.url}'}"
 
     }
 
