@@ -3,7 +3,8 @@ package com.ttn.linksharing
 import com.ttn.constants.DefaultPassword
 
 /*
-Add createResourceRatings to add dummy ratings
+Resources which are not created by the user in the topics
+ subscribed by him/her should have in his/her reading item.
 */
 
 class BootStrap {
@@ -15,27 +16,31 @@ class BootStrap {
         createResource()
         subscribeTopicsNotCreatedByUser()
         createReadingItems()
-//        createResourceRating()
+       // question27()
+        createResourceRating()
     }
     void createUsers(){
 
-       final def pass=DefaultPassword.PASSWORD
+
         //admin
         if(User.count()==0) {
-            User admin = new User(email: "admin@gmail.com", password: pass, firstName: "admin", lastName: "portal", userName: 'adminPortal', photo: 121, admin: true, active: true)
-            admin.validate()
-            log.error("error: ${admin.errors.getAllErrors()}")
-            admin.save(flush: true)
-            if(admin.errors.hasErrors()==false)
+            User admin = new User(email: "admin@gmail.com", password: DefaultPassword.PASSWORD, firstName: "admin", lastName: "portal", userName: 'adminPortal', photo: 121, admin: true, active: true)
+            if(admin.save()){
                 log.info("Admin Saved Successfully")
+            }
+            else {
+                log.error("error: ${admin.errors.getAllErrors()}")
+            }
 
             //normal
-            User normal = new User(email: "prachijulka@gmail.com", password: pass, firstName: "Prachi", lastName: "Julka", userName: 'PrachiJulka', photo: 122, admin: false, active: true)
-            normal.validate()
-            log.error("error: ${normal.errors.getFieldErrors()}")
-            normal.save(flush: true)
-            if(normal.errors.hasErrors()==false)
+            User normal = new User(email: "prachijulka@gmail.com", password: DefaultPassword.PASSWORD, firstName: "Prachi", lastName: "Julka", userName: 'PrachiJulka', photo: 122, admin: false, active: true)
+            if(normal.save()){
                 log.info("Normal User Saved Successfully")
+            }
+            else {
+                log.error("error: ${normal.errors.getFieldErrors()}")
+            }
+
         }
     }
 
@@ -44,38 +49,45 @@ class BootStrap {
         userCount.each {
 
             if (Topic.findAllByCreatedBy(it).size()==0) {
-                //User normal = User.findByUserName("PrachiJulka")
 
                 Topic topic = new Topic(name: "BigData", createdBy: it, visibility: Visibility.PUBLIC)
-                it.addToTopics(topic)
 
                 Topic topic1 = new Topic(name: "Java", createdBy: it, visibility: Visibility.PRIVATE)
-                it.addToTopics(topic1)
 
                 Topic topic2 = new Topic(name: "nodeJs", createdBy: it, visibility: Visibility.PUBLIC)
-                it.addToTopics(topic2)
 
                 Topic topic3 = new Topic(name: "AngularJs", createdBy: it, visibility: Visibility.PRIVATE)
-                it.addToTopics(topic3)
 
                 Topic topic4 = new Topic(name: "MachineLearning", createdBy: it, visibility: Visibility.PUBLIC)
-                it.addToTopics(topic4)
 
-                topic.validate()
-                log.error("Topic ${topic.errors.getFieldErrors()}")
-                topic.save()
-                topic1.validate()
-                log.error("Topic ${topic1.errors.getFieldErrors()}")
-                topic1.save()
-                topic2.validate()
-                log.error("Topic ${topic2.errors.getFieldErrors()}")
-                topic2.save()
-                topic3.validate()
-                log.error("Topic ${topic3.errors.getFieldErrors()}")
-                topic3.save()
-                topic4.validate()
-                log.error("Topic ${topic4.errors.getFieldErrors()}")
-                topic4.save()
+
+                if(topic.save())
+                    it.addToTopics(topic)
+
+                if(topic1.save())
+                    it.addToTopics(topic1)
+
+                if(topic2.save())
+                    it.addToTopics(topic2)
+
+                if(topic3.save())
+                    it.addToTopics(topic3)
+
+                if(topic4.save())
+                    it.addToTopics(topic4)
+
+
+                else {
+                    log.error("Topic ${topic.errors.getFieldErrors()}")
+                    log.error("Topic ${topic1.errors.getFieldErrors()}")
+                    log.error("Topic ${topic2.errors.getFieldErrors()}")
+                    log.error("Topic ${topic3.errors.getFieldErrors()}")
+                    log.error("Topic ${topic4.errors.getFieldErrors()}")
+
+                }
+                it.save()
+                log.info("Topics Saved Successfully")
+
 
             }
         }
@@ -88,22 +100,44 @@ class BootStrap {
 
                 topics.each {
                     Resource resource = new LinkResource(url: "https://en.wikipedia.org/wiki/Big_data", description: "${it.name} url", topic: it, user: it.createdBy)
-                    resource.validate()
-                    log.error("Resource Error: ${resource.errors.allErrors}")
-                    resource.save()
-                    Resource resource1 = new LinkResource(url: "https://www.sas.com/en_in/insights/big-data/what-is-big-data.html", description: "${it.name} bigdata", topic: it, user:it.createdBy)
-                    resource1.validate()
-                    log.error("Resource Error: ${resource1.errors.allErrors}")
-                    resource1.save()
+                    Resource resource1 = new LinkResource(url: "https://www.sas.com/en_in/insights/big-data/what-is-big-data.html", description: "${it.name} bigdata", topic: it, user: it.createdBy)
                     Resource resource2 = new DocumentResource(filePath: "fvnkdfvdk", description: "${it.name} cndfbcfefbfer", user: it.createdBy, topic: it)
-                    resource2.validate()
-                    log.error("Resource Error: ${resource2.errors.allErrors}")
-                    resource2.save()
                     Resource resource3 = new DocumentResource(filePath: "nvdjfn", user: it.createdBy, description: "${it.name} sdns", topic: it)
-                    resource3.validate()
-                    log.error("Resource Error: ${resource3.errors.allErrors}")
-                    resource3.save()
 
+                    if (resource.save()) {
+                        it.addToResources(resource)
+                        it.createdBy.addToResources(resource)
+                    }
+                    else {
+                        log.error("Resource Error: ${resource.errors.allErrors}")
+                    }
+                    if (resource1.save()) {
+                        it.addToResources(resource1)
+                        it.createdBy.addToResources(resource1)
+                    }
+                    else {
+                        log.error("Resource Error: ${resource1.errors.allErrors}")
+                    }
+                    if(resource2.save()){
+                        it.addToResources(resource2)
+                        it.createdBy.addToResources(resource2)
+
+                    }
+                    else{
+                        log.error("Resource Error: ${resource2.errors.allErrors}")
+
+                    }
+                    if(resource3.save()){
+                        it.addToResources(resource3)
+                        it.createdBy.addToResources(resource3)
+
+                    }
+                    else{
+                        log.error("Resource Error: ${resource3.errors.allErrors}")
+                      }
+                  //  createReadingItemIfItDoesNotExistsInUsersReadingItem(it.createdBy,it)
+                    it.createdBy.save()
+                    it.save()
                 }
 
             }
@@ -112,59 +146,83 @@ class BootStrap {
         }
 
     void subscribeTopicsNotCreatedByUser(){
-       Integer id=1;
-        List<User> userCount=User.getAll()
+        List<User> userList=User.getAll()
 
-        userCount.each{
-            User user=it
+        userList.each{
+            User user->
             List<Topic> topics=Topic.findAllByCreatedByNotEqual(user)
 
             topics.each {
-                if(Subscription.findAllByTopicsAndUser(it,user).size==0) {
+                if(Subscription.findAllByTopicsAndUser(it,user).size()==0) {
                     Subscription subscription = new Subscription(seriousness: Seriousness.CASUAL, user: user, topics: it)
-                    subscription.validate()
-                    log.error("Error:${subscription.errors.getAllErrors()}")
-                    subscription.save()
+                    if (subscription.save()) {
+                      //  createReadingItemIfItDoesNotExistsInUsersReadingItem(subscription.user,subscription.topics)
+                        it.addToSubscriptions(subscription)
+                        user.addToSubscriptions(subscription)
+                    }
+                    else {
+                        log.error("Error:${subscription.errors.getAllErrors()}")
+                      }
                 }
            }
 
-            id++
+
         }
 
     }
 
     void createReadingItems(){
-        List<Resource> resource=Resource.getAll()
-        List<User> userList=User.getAll()
+            List<User> users = User.getAll()
+            users.each{
+                User user->
+                user.subscriptions.each {
 
-        userList.each {
-            User user=it
-            List<Subscription> subscriptionList=Subscription.findAllByUser(user)
-            subscriptionList.each {
+                    it.topics.resources.each{
 
-                        if(it.topics.getResources()){
-                            it.topics.getResources().each {
-
-                                ReadingItem readingItem=new ReadingItem(user: user,resource: it,isRead: true)
-                                readingItem.validate()
-                                readingItem.save()
+                        if(it.user != user && ReadingItem.findAllByResourceAndUser(it,user).size()==0){
+                            ReadingItem readingItem = new ReadingItem(user: user,isRead: false,resource: it)
+                            if(readingItem.save()){
+                                user.addToReadingItems(readingItem)
+                                user.save()
                             }
+                            else{
+                                log.error("Error:${readingItem.errors.getAllErrors()}")
+                               }
                         }
+                    }
+                }
+            }
+        }
+
+
+
+    void createResourceRating(){
+
+        List<User> userList=User.getAll()
+        userList.each {
+            User user->
+            user.readingItems.each {
+                if(!it.isRead && ResourceRating.findAllByUser(user).size()==0){
+                    ResourceRating resourceRating=new ResourceRating(user: user, resource: it.resource,score:4)
+                    resourceRating.validate()
+                    if(resourceRating.save()){
+                        log.info("Saved Successfully")
+                        user.addToResourceRating(resourceRating)
+                        user.save()
+                    }
+                    else {
+                        log.error("${resourceRating.errors.getAllErrors()}")
+                    }
+                }
             }
 
         }
 
     }
 
-    void createResourceRating(){
-        List<Resource> resource=Resource.getAll()
-        resource.each {
-            ResourceRating resourceRating=new ResourceRating(user: it.user,resource:it,score: 3)
-            resourceRating.validate()
-            log.error("Errorrrrrrrrrrrrrrrrrrrrrrr ${resourceRating.errors.getAllErrors()}")
-            resourceRating.save()
-        }
-    }
+
+
+
     def destroy = {
     }
 }

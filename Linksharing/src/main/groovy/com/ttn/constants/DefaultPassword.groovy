@@ -5,5 +5,5 @@ Add constants file for default password*/
 
 class DefaultPassword {
 
-    public static final PASSWORD = "ROOT"
+    public static final PASSWORD = "ROOT@123"
 }

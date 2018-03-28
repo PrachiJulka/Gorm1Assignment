@@ -13,22 +13,6 @@ class IndexControllerSpec extends Specification implements ControllerUnitTest<In
 
     void "test something"() {
         expect:"fix me"
-            false == false
-    }
-
-    def "Test"(){
-    when:
-        controller.index1()
-
-        then:
-        response.contentAsString=="prachi"
-    }
-
-    def "Test Index2"(){
-        when:
-        controller.index2()
-
-        then:
-        response.redirectUrl=="/index/index1/"+"praci"
+            true == false
     }
 }
