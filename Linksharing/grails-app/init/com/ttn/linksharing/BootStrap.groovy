@@ -3,8 +3,7 @@ package com.ttn.linksharing
 import com.ttn.constants.DefaultPassword
 
 /*
-Resources which are not created by the user in the topics
- subscribed by him/her should have in his/her reading item.
+Reading item of resource should be created only if it does not already exit in users reading item
 */
 
 class BootStrap {
@@ -135,7 +134,7 @@ class BootStrap {
                     else{
                         log.error("Resource Error: ${resource3.errors.allErrors}")
                       }
-                  //  createReadingItemIfItDoesNotExistsInUsersReadingItem(it.createdBy,it)
+                    createReadingItemIfItDoesNotExistsInUsersReadingItem(it.createdBy,it)
                     it.createdBy.save()
                     it.save()
                 }
@@ -156,7 +155,7 @@ class BootStrap {
                 if(Subscription.findAllByTopicsAndUser(it,user).size()==0) {
                     Subscription subscription = new Subscription(seriousness: Seriousness.CASUAL, user: user, topics: it)
                     if (subscription.save()) {
-                      //  createReadingItemIfItDoesNotExistsInUsersReadingItem(subscription.user,subscription.topics)
+                        createReadingItemIfItDoesNotExistsInUsersReadingItem(subscription.user,subscription.topics)
                         it.addToSubscriptions(subscription)
                         user.addToSubscriptions(subscription)
                     }
@@ -220,7 +219,22 @@ class BootStrap {
 
     }
 
-
+//Question24 Reading item of resource should be created only if it does not already exist in users reading item
+    void createReadingItemIfItDoesNotExistsInUsersReadingItem(User user,Topic topic)
+    {
+        topic.resources.each {
+            ReadingItem readingItem=new ReadingItem(user: user,resource:it,isRead: false)
+            if(readingItem.save()){
+                it.addToReadingItems(readingItem)
+                it.save()
+                user.addToReadingItems(readingItem)
+                user.save()
+            }
+            else{
+                log.error("Error: ${readingItem.errors.getAllErrors()}")
+            }
+        }
+    }
 
 
     def destroy = {
