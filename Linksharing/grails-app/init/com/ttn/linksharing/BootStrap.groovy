@@ -150,9 +150,12 @@ class BootStrap {
             topics.each {
                 if(Subscription.findAllByTopicsAndUser(it,user).size==0) {
                     Subscription subscription = new Subscription(seriousness: Seriousness.CASUAL, user: user, topics: it)
-                    subscription.validate()
-                    log.error("Error:${subscription.errors.getAllErrors()}")
-                    subscription.save()
+                   
+                   if( subscription.save())
+                    log.info("Saved Successfully")
+                    else
+                       log.error("Error:${subscription.errors.getAllErrors()}")
+                 
                 }
            }
 
