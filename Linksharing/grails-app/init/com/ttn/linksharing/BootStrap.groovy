@@ -13,7 +13,7 @@ class BootStrap {
 
 
         //admin
-        if(User.count()==0) {
+     
             User admin = new User(email: "admin@gmail.com", password: DefaultPassword.PASSWORD, firstName: "admin", lastName: "portal", userName: 'adminPortal', photo: 121, admin: true, active: true)
             if(admin.save(failOnError:true)){
                 log.info("Admin Saved Successfully")
@@ -32,7 +32,7 @@ class BootStrap {
             }
 
         }
-    }
+    
     
     def destroy = {
     }
