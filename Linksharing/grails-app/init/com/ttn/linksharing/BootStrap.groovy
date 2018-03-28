@@ -171,7 +171,7 @@ class BootStrap {
         resource.each {
             ResourceRating resourceRating=new ResourceRating(user: it.user,resource:it,score: 3)
             resourceRating.validate()
-            log.error("Errorrrrrrrrrrrrrrrrrrrrrrr ${resourceRating.errors.getAllErrors()}")
+    
             resourceRating.save()
         }
     }
