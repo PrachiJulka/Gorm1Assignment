@@ -147,7 +147,7 @@ class BootStrap {
         List<User> userCount=User.getAll()
 
         userCount.each{
-            User user=it
+            User user->
             List<Topic> topics=Topic.findAllByCreatedByNotEqual(user)
 
             topics.each {
