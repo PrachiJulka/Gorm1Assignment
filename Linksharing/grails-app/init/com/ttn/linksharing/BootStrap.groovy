@@ -128,7 +128,6 @@ class BootStrap {
                     else{
                         log.error("Resource Error: ${resource3.errors.allErrors}")
                       }
-                    createReadingItemIfItDoesNotExistsInUsersReadingItem(it.createdBy,it)
                     it.createdBy.save()
                     it.save()
                 }
@@ -150,7 +149,6 @@ class BootStrap {
                 if(Subscription.findAllByTopicsAndUser(it,user).size()==0) {
                     Subscription subscription = new Subscription(seriousness: Seriousness.CASUAL, user: user, topics: it)
                     if (subscription.save()) {
-                        createReadingItemIfItDoesNotExistsInUsersReadingItem(subscription.user,subscription.topics)
                         it.addToSubscriptions(subscription)
                         user.addToSubscriptions(subscription)
                     }
