@@ -15,7 +15,7 @@ class BootStrap {
         createResource()
         subscribeTopicsNotCreatedByUser()
         createReadingItems()
-       // question27()
+        question27()
         createResourceRating()
     }
     void createUsers(){
@@ -235,7 +235,26 @@ class BootStrap {
             }
         }
     }
-
+//Question27 createdBy of resourcerating should be createdby of reading item and resource of resourcerating should be resource of readingitem
+    void question27(){
+        List<ResourceRating> resourceRatingList=ResourceRating.getAll()
+        resourceRatingList.each {
+            ResourceRating resourceRating->
+                if(ReadingItem.findAllByUserAndResource(resourceRating.user,resourceRating.resource).size()==0) {
+                    ReadingItem readingItem = new ReadingItem(user: resourceRating.user, resource: resourceRating.resource, isRead: false)
+                    if (readingItem.save()){
+                        log.info("Saved Successfully")
+                        resourceRating.resource.addToReadingItems(readingItem)
+                        resourceRating.user.addToReadingItems(readingItem)
+                        resourceRating.resource.save()
+                        resourceRating.user.save()
+                    }
+                    else {
+                        log.error("Error:- ${readingItem.errors.getAllErrors()}")
+                    }
+                }
+        }
+    }
 
     def destroy = {
     }
