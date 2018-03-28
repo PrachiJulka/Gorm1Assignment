@@ -129,7 +129,7 @@ class BootStrap {
                     else{
                         log.error("Resource Error: ${resource3.errors.allErrors}")
                       }
-                    createReadingItemIfItDoesNotExistsInUsersReadingItem(it.createdBy,it)
+                   
                     it.createdBy.save()
                     it.save()
                 }
